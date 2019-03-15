@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en" class="fullscreen-bg" xmlns:th="http://www.springframework.org/schema/data/jaxb">
+
+<head>
+	<title>Login</title>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+	<!-- VENDOR CSS -->
+	<link rel="stylesheet" th:href="@{assets/css/bootstrap.min.css}">
+	<link rel="stylesheet" th:href="@{assets/vendor/font-awesome/css/font-awesome.min.css}">
+	<link rel="stylesheet" th:href="@{assets/vendor/linearicons/style.css}">
+	<!-- MAIN CSS -->
+	<link rel="stylesheet" th:href="@{assets/css/main.css}">
+	<!-- FOR DEMO PURPOSES ONLY. You should remove this in your project -->
+	<link rel="stylesheet" th:href="@{assets/css/demo.css}">
+	<!-- GOOGLE FONTS -->
+	<link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700" rel="stylesheet">
+	<!-- ICONS -->
+	<link rel="apple-touch-icon" sizes="76x76" th:href="@{assets/img/apple-icon.png}">
+	<link rel="icon" type="image/png" sizes="96x96" th:href="@{assets/img/favicon.png}">
+	<!-- js -->
+	<script th:src="@{assets/vendor/jquery/jquery.min.js}"></script>
+	<script th:src="@{assets/vendor/bootstrap/js/bootstrap.min.js}"></script>
+</head>
+
+<body>
+	<!-- WRAPPER -->
+	<div id="wrapper">
+		<div class="vertical-align-wrap">
+			<div class="vertical-align-middle">
+				<div class="auth-box ">
+					<div class="left">
+						<div class="content">
+							<div id="myTabContent" class="tab-content">
+			   					<div class="tab-pane in active fade" id="login">
+			   						<div class="header">
+										<div class="logo text-center"><img th:src="@{assets/img/logo-dark.png}" alt="Klorofil Logo"></div>
+										<p class="lead">Login to your account</p>
+									</div>
+									<form class="form-auth-small" method="post" th:action="@{/loginPost}" role="form">
+										<div class="form-group">
+											<label for="login-email" class="control-label sr-only">Email</label>
+											<input type="text" class="form-control"  name="login-email" id="login-email"  placeholder="Username/Email" autofocus required>
+										</div>
+										<div class="form-group">
+											<label for="login-password" class="control-label sr-only">Password</label>
+											<input type="password" class="form-control" id="login-password" name="login-password"  placeholder="Password" required>
+										</div>
+										<div class="form-group clearfix">
+											<label class="fancy-checkbox element-left">
+												<input type="checkbox" id="remember">
+												<span>记住密码</span>
+											</label>
+										</div>
+										<div class="row">
+								          	<div class="col-sm-6">
+								            	<button class="btn btn-lg btn-default btn-block" type="submit"  onclick="loginBtn_click()">登录</button>
+								          	</div>
+								          	<div class="col-sm-6">
+								            	<a class="btn btn-lg btn-primary btn-block" href="#signup" data-toggle="tab">注册</a>
+								          	</div>
+								        </div>
+										<div class="bottom">
+											<span class="helper-text"><i class="fa fa-lock"></i> <a href="#">忘记密码？</a></span>
+										</div>
+										<input type="hidden" name="ipStr" id="ipStr" value="testIP">
+										<input type="hidden" name="addressStr" id="addressStr" value="testAddress">
+										<script src="http://pv.sohu.com/cityjson?ie=utf-8"></script>
+										<script type="text/javascript">
+                                            document.getElementById("ipStr").value = returnCitySN["cip"];
+                                            document.getElementById("addressStr").value = returnCitySN["cname"];
+										</script>
+									</form>
+									<!-- 记住密码 -->
+									<script type="text/javascript">
+                                        $(document).ready(function () {
+                                            var strName = localStorage.getItem('UserName');
+                                            var strPass = localStorage.getItem('UserPass');
+                                            if (strName) {
+                                                $('#login-email').val(strName);
+                                            }
+                                            if (strPass) {
+                                                $('#login-password').val(strPass);
+                                                $('#remember').prop( "checked", true );
+                                            }
+                                        });
+
+                                        function loginBtn_click() {
+                                            var strName = $('#login-email').val();
+                                            var strPass = $('#login-password').val();
+                                            localStorage.setItem('UserName', strName);
+                                            if ($('#remember').is(':checked')) {
+                                                localStorage.setItem('UserPass', strPass);
+                                            } else {
+                                                localStorage.removeItem('UserPass');
+                                            }
+                                        }
+									</script>
+
+			   					</div>
+			   					<div class="tab-pane fade" id="signup">
+			   						<div class="header">
+										<div class="logo text-center"><img th:src="@{assets/img/logo-dark.png}" alt="Klorofil Logo"></div>
+										<p class="lead">Sign up your account</p>
+									</div>
+									<form class="form-auth-small" method="post" th:action="@{/signupPost}" role="form">
+										<div class="form-group">
+											<label for="signup-username" class="control-label sr-only">用户名</label>
+											<input type="text" class="form-control" name="signup-username" id="signup-username" value="" placeholder="Username" required>
+										</div>
+										<div class="form-group">
+											<label for="signup-email" class="control-label sr-only">Email</label>
+											<input type="email" class="form-control" name="signup-email" id="signup-email" value="" placeholder="Email" required>
+										</div>
+										<div class="form-group">
+											<label for="signup-password" class="control-label sr-only">Password</label>
+											<input type="password" class="form-control" name="signup-password" id="signup-password" value="" placeholder="Password" required>
+										</div>
+										<div class="form-group clearfix">
+											<label class="fancy-checkbox element-left">
+												<span>点击注册表示你已阅读并同意<a href="#">服务条款</a></span>
+											</label>
+										</div>
+										<button type="submit" class="btn btn-primary btn-lg btn-block">注册</button>
+
+										<div class="bottom">
+											<span class="helper-text"><i class="fa fa-lock"></i> <a href="#login" data-toggle="tab">已有账号？登录</a></span>
+										</div>
+									</form>
+			   					</div>
+			   				</div>
+							
+						</div>
+					</div>
+					<div class="right">
+						<div class="content text">
+							<h1 color="blue">Share Your Wishes</h1>
+						</div>
+					</div>
+					<div class="clearfix"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- END WRAPPER -->
+</body>
+
+</html>

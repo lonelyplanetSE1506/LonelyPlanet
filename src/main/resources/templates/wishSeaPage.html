@@ -1,0 +1,292 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.springframework.org/schema/data/jaxb">
+
+<head>
+    <title>心愿海</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <!-- VENDOR CSS -->
+    <link rel="stylesheet" th:href="@{assets/vendor/bootstrap/css/bootstrap.css}">
+    <link rel="stylesheet" th:href="@{assets/vendor/font-awesome/css/font-awesome.min.css}">
+    <link rel="stylesheet" th:href="@{assets/vendor/linearicons/style.css}">
+    <!-- MAIN CSS -->
+    <link rel="stylesheet" th:href="@{assets/css/main_cg.css}">
+    <!-- FOR DEMO PURPOSES ONLY. You should remove this in your project -->
+    <link rel="stylesheet" th:href="@{assets/css/demo.css}">
+    <!-- GOOGLE FONTS -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700" rel="stylesheet">
+    <!-- ICONS -->
+    <link rel="apple-touch-icon" sizes="76x76" th:href="@{assets/img/apple-icon.png}">
+    <link rel="icon" type="image/png" sizes="96x96" th:href="@{assets/img/favicon.png}">
+
+    <script src="assets/vendor/jquery/jquery.min.js"></script>
+    <!-- 表格分页 -->
+    <link rel="stylesheet" th:href="@{assets/jpages/css/jPages.css}">
+    <script th:src="@{assets/jpages/js/jPages.js}"></script>
+
+    <script>
+        $(function(){
+            $("div.holder").jPages({
+                containerID : "movies",
+                previous : "上一页",
+                next : "下一页",
+                perPage : 10,
+                delay : 0
+            });
+        });
+    </script>
+
+
+
+    <script>
+        function changeLength(obj, str) {
+            var lg = obj.value.length;
+            var a = document.getElementById(str);
+            a.innerHTML = lg;
+        }
+
+
+        $(document).ready(function(){
+            $(".goodButton").each(function(){
+                var isGooded = new Number($($(this).prev()).text());
+                var goodIconObj = $($($(this).children()).first());  //图标obj
+                if (isGooded == 1) {
+                    $(goodIconObj).attr("class", "fa fa-thumbs-up");
+                }
+                else
+                {
+                    $(goodIconObj).attr("class", "lnr lnr-thumbs-up");
+                }
+            });
+
+            $(".collectButton").each(function(){
+                var isCollected = new Number($($(this).prev()).text());
+                var collectIconObj = $($($(this).children()).first());  //图标obj
+                if (isCollected == 1) {
+                    $(collectIconObj).attr("class", "fa fa-star");
+                }
+                else
+                {
+                    $(collectIconObj).attr("class", "lnr lnr-star");
+                }
+            });
+
+
+            $(".goodButton").click(function(){
+                var isGooded = new Number($($(this).prev()).text());
+                var num = new Number($($($(this).children()).last()).text());
+                var goodIconObj = $($($(this).children()).first());  //图标obj
+                if (isGooded == 1) {
+                    num = num - 1;
+                    isGooded = 0 ;
+                    $(goodIconObj).attr("class", "lnr lnr-thumbs-up");
+                }
+                else
+                {
+                    num = num + 1;
+                    isGooded = 1 ;
+                    $(goodIconObj).attr("class", "fa fa-thumbs-up");
+                }
+                $($($(this).children()).last()).text(num);
+                $($(this).prev()).text(isGooded);
+                $(this).parent().submit();
+            });
+
+            $(".collectButton").click(function(){
+                var isCollected = new Number($($(this).prev()).text());
+                var num = new Number($($($(this).children()).last()).text());
+                var collectIconObj = $($($(this).children()).first());  //图标obj
+
+                if (isCollected == 1) {
+                    num = num - 1;
+                    isCollected = 0 ;
+                    $(collectIconObj).attr("class", "lnr lnr-star");
+                }
+                else
+                {
+                    num = num + 1;
+                    isCollected = 1 ;
+                    $(collectIconObj).attr("class", "fa fa-star");
+                }
+                $($($(this).children()).last()).text(num);
+                $($(this).prev()).text(isCollected);
+                $(this).parent().submit();
+            });
+        });
+
+
+    </script>
+</head>
+
+<body>
+<!-- WRAPPER -->
+<div id="wrapper">
+    <!-- NAVBAR -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="brand">
+            <img src="/assets/img/logo-dark.png" alt="Klorofil Logo" class="img-responsive logo">
+        </div>
+        <div class="container-fluid">
+            <ul class="nav navbar-nav navbar-left">
+                <li>
+                    <h1>&nbsp;&nbsp;<a th:href="@{tree}">树洞</a>&nbsp;&nbsp;&nbsp;&nbsp;</h1>
+                </li>
+                <li>
+                    <h1><a th:href="@{wishSea}">心愿海</a>&nbsp;&nbsp;&nbsp;&nbsp;</h1>
+                </li>
+            </ul>
+            <div id="navbar-menu">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><img th:src="${presentAccount.getAvatar()}" class="img-circle" alt="Avatar"> <span th:text="${presentAccount.getNikeName()}">Samuel</span> <i class="icon-submenu lnr lnr-chevron-down"></i></a>
+                        <ul class="dropdown-menu">
+                            <li><a th:href="@{/logout}"><i class="lnr lnr-exit"></i> <span>Logout</span></a></li>
+                        </ul>
+                    </li>
+                    <!-- <li>
+                        <a class="update-pro" href="#downloads/klorofil-pro-bootstrap-admin-dashboard-template/?utm_source=klorofil&utm_medium=template&utm_campaign=KlorofilPro" title="Upgrade to Pro" target="_blank"><i class="fa fa-rocket"></i> <span>UPGRADE TO PRO</span></a>
+                    </li> -->
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <!-- END NAVBAR -->
+
+    <iframe name='hidden_frame' id="hidden_frame" style="display:none"></iframe>
+    <!-- MAIN -->
+    <div class="main">
+        <!-- MAIN CONTENT -->
+        <div class="main-content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-2"></div>
+                    <div class="col-lg-6">
+                        <div class="holder"></div>
+                        <div id="movies">
+                            <div th:each="Wish : ${wishes}">
+                                <div class="col-lg-12 col-md-12 col-xs-12">
+                                    <div class="panel-group">
+                                        <div class="panel panel-default">
+                                            <div class="panel-heading" style="background-color: white">
+                                                <h3 th:text="${Wish.getTitle()}">
+                                                    标题
+                                                </h3>
+                                                <p th:text="${Wish.getContent()}">心愿内容</p>
+                                                <hr>
+                                                <span>
+                                                    <form style="display: inline" method="post" th:action="@{/good}" role="form" target="hidden_frame">
+                                                        <input type="hidden" th:value="${Wish.getWishID()}" name="goodWishID">
+                                                        <span th:text="${aWishToComment.hasGood(Wish.getWishID())}"  style="display:none">点赞与否</span>
+                                                        <a href="javascript:void(0)" class="goodButton">
+                                                            <span class="lnr lnr-thumbs-up"></span><span>点赞</span><span th:text="${Wish.getGoodNum()}"></span>
+                                                        </a>&nbsp;&nbsp;&nbsp;&nbsp;
+                                                    </form>
+                                                    <form style="display: inline" method="post" th:action="@{/collect}" role="form" target="hidden_frame">
+                                                         <input type="hidden" th:value="${Wish.getWishID()}" name="collectWishID">
+                                                        <span th:text="${aWishToComment.hasCollection(Wish.getWishID())}"  style="display:none">收藏与否</span>
+                                                        <a href="javascript:void(0)" class="collectButton">
+                                                            <span class="lnr lnr-star"></span><span>收藏</span><span th:text="${Wish.getCollectionNum()}"></span>
+                                                        </a>&nbsp;&nbsp;&nbsp;&nbsp;
+                                                    </form>
+                                                    <a data-toggle="collapse" data-parent="#accordion" th:href="@{'#dialog'+${Wish.getWishID()}}">
+                                                        <span class="lnr lnr-bubble"></span><span>评论</span><span th:text="${Wish.getCommentNum()}"></span>
+                                                    </a>&nbsp;&nbsp;&nbsp;&nbsp;
+                                                    发布时间：
+                                                    <span th:text="${Wish.getRelTime().toString().substring(0,16)}"></span>&nbsp;&nbsp;&nbsp;&nbsp;
+                                                    作者：<a href="javascript:void(0)"   title="用户简介"  data-trigger='hover focus'
+                                                          data-container="body" data-toggle="popover" data-placement="top" data-html="true"
+                                                          th:data-content="'<ul class=&quot;list-unstyled list-justify&quot;>
+                                                  <li>用户名:  <span>' + ${Wish.getAccountInfo().getNikeName()} +'</span></li>
+                                                  <li>出生日期:  <span>' +${Wish.getAccountInfo().getBirthday().toString().substring(0,10)} +'</span></li>
+                                                  <li>邮箱:  <span>' + ${Wish.getAccountInfo().getEmail()} + '</span></li>
+                                              </ul>'"><span th:text="${Wish.getAccountInfo().getNikeName()}"></span></a>
+                                                </span>
+                                            </div>
+                                            <div th:id="'dialog' + ${Wish.getWishID()}" class="panel-collapse collapse">
+                                                <div class="panel-body">
+                                                    <ul class="list-unstyled" th:each="myWishCm : ${aWishToComment.getByWishID(Wish.getWishID())}">
+                                                        <li><a href="javascript:void(0)"   title="用户简介"  data-trigger='hover focus'
+                                                               data-container="body" data-toggle="popover" data-placement="top" data-html="true"
+                                                               th:data-content="'<ul class=&quot;list-unstyled list-justify&quot;>
+                                                  <li>用户名:  <span>' + ${Wish.getAccountInfo().getNikeName()} +'</span></li>
+                                                  <li>出生日期:  <span>' +${Wish.getAccountInfo().getBirthday().toString().substring(0,10)} +'</span></li>
+                                                  <li>邮箱:  <span>' + ${Wish.getAccountInfo().getEmail()} + '</span></li>
+                                              </ul>'"><span th:text="${myWishCm.getAccountInfo().getNikeName()}">作者</span></a><span>： </span>
+                                                            <span th:text="${myWishCm.getCMContent()}">内容</span>
+                                                            <br>
+                                                            <span style="float: right" th:text="${myWishCm.getCMTime().toString().substring(0,16)}"></span><hr>
+                                                        </li>
+                                                    </ul>
+                                                    <form class="form-auth-small" method="post" th:action="@{/addWishSeaComment}" role="form">
+                                                        <div class="modal-body">
+                                                            <textarea name="cmEdit" class="form-control" placeholder="发表内容" rows="4" maxlength="140"  th:onkeyup="'changeLength(this,'+ ${Wish.getWishID()} + ')'" required=""></textarea>
+                                                            字数：<span th:id="${Wish.getWishID()}">0</span>/140
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="submit" class="btn btn-primary">发表评论</button>
+                                                            <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                                                        </div>
+                                                        <input type="hidden" name="wishID"  th:value="${Wish.getWishID()}">
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="holder"></div>
+                    </div>
+                    <div class="col-lg-3 hidden-xs hidden-sm hidden-md">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div style="position: fixed">
+                                    <div class="panel panel-default">
+                                        <!-- Default panel contents -->
+                                        <div class="panel-heading" style="padding-bottom: 10px;padding-top: 10px;width: 350px;">今日热门</div>
+                                        <!-- List group -->
+                                        <div class="list-group" th:each="top10Wish : ${top10Wishes}">
+                                            <a th:href="'wish' + ${top10Wish.getWishID()}" class="list-group-item"><span th:text="${top10Wishes.indexOf(top10Wish)+1}+'. '"></span><span th:text="${#strings.abbreviate(top10Wish.getTitle(),20)}"></span><span th:text="${top10Wish.getGoodNum()}" class="badge">14</span></a>
+                                        </div>
+                                    </div>
+                                    <div class="panel panel-default">
+                                        <!-- Default panel contents -->
+                                        <div class="panel-heading" style="padding-bottom: 10px;padding-top: 10px;">随机心愿</div>
+                                        <!-- List group -->
+                                        <div class="list-group" th:each="randomWish : ${randomWishes}">
+                                            <a th:href="'wish' + ${randomWish.getWishID()}" class="list-group-item" th:text="${#strings.abbreviate(randomWish.getTitle(),20)}">Cras justo odio</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-1"></div>
+                </div>
+            </div>
+        </div>
+        <!-- END MAIN CONTENT -->
+    </div>
+    <!-- END MAIN -->
+    <div class="clearfix"></div>
+    <footer>
+        <div class="container-fluid">
+            <p class="copyright">Copyright &copy; 2018.HUST</p>
+        </div>
+    </footer>
+</div>
+<!-- END WRAPPER -->
+<!-- Javascript -->
+<script src="assets/vendor/bootstrap/js/bootstrap.min.js"></script>
+<script src="assets/vendor/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+<script src="assets/scripts/klorofil-common.js"></script>
+
+<script>
+    $(function () {
+        $("[data-toggle='popover']").popover();
+    });
+</script>
+</body>
+
+</html>

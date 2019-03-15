@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.springframework.org/schema/data/jaxb">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <link rel="stylesheet" th:href="@{assets/vendor/bootstrap/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{assets/vendor/font-awesome/css/font-awesome.min.css}">
+    <link rel="stylesheet" th:href="@{assets/vendor/linearicons/style.css}">
+    <!-- MAIN CSS -->
+    <link rel="stylesheet" th:href="@{assets/css/main.css}">
+    <!-- FOR DEMO PURPOSES ONLY. You should remove this in your project -->
+    <link rel="stylesheet" th:href="@{assets/css/demo.css}">
+    <!-- GOOGLE FONTS -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700" rel="stylesheet">
+
+
+
+    <link rel="stylesheet" th:href="@{assets/jpages/css/jPages.css}">
+
+    <script src="https://cdn.bootcss.com/jquery/1.10.2/jquery.min.js" ></script>
+    <script th:src="@{assets/jpages/js/jPages.js}"></script>
+
+
+
+    <script>
+        $(function(){
+            $("div.holder").jPages({
+                containerID : "movies",
+                previous : "上一页",
+                next : "下一页",
+                perPage : 5,
+                delay : 0
+            });
+        });
+    </script>
+</head>
+<body>
+<div class="holder"></div>
+
+<table>
+    <thead>
+    <tr>
+        <th>Rank</th>
+        <th>Rating</th>
+        <th>Title</th>
+        <th>Votes</th>
+    </tr>
+
+    </thead>
+    <tbody id="movies">
+    <tr>
+        <td>400</td>
+        <td>500</td>
+        <td>600</td>
+        <td>600</td>
+    </tr>
+    <tr>
+        <td>400</td>
+        <td>500</td>
+        <td>600</td>
+        <td>600</td>
+    </tr>
+    <tr>
+        <td>400</td>
+        <td>500</td>
+        <td>600</td>
+        <td>600</td>
+    </tr>
+    <tr>
+        <td>400</td>
+        <td>500</td>
+        <td>600</td>
+        <td>600</td>
+    </tr>
+    <tr>
+        <td>400</td>
+        <td>500</td>
+        <td>600</td>
+        <td>600</td>
+    </tr>
+    <tr>
+        <td>400</td>
+        <td>500</td>
+        <td>600</td>
+        <td>600</td>
+    </tr>
+    <tr>
+        <td>400</td>
+        <td>500</td>
+        <td>600</td>
+        <td>600</td>
+    </tr>
+    <tr>
+        <td>400</td>
+        <td>500</td>
+        <td>600</td>
+        <td>600</td>
+    </tr>
+    <tr>
+        <td>400</td>
+        <td>500</td>
+        <td>600</td>
+        <td>600</td>
+    </tr>
+    <tr>
+        <td>400</td>
+        <td>500</td>
+        <td>600</td>
+        <td>600</td>
+    </tr>
+    <tr>
+        <td>400</td>
+        <td>500</td>
+        <td>600</td>
+        <td>600</td>
+    </tr>
+    <tr>
+        <td>400</td>
+        <td>500</td>
+        <td>600</td>
+        <td>600</td>
+    </tr>
+    <tr>
+        <td>400</td>
+        <td>500</td>
+        <td>600</td>
+        <td>600</td>
+    </tr>
+    <tr>
+        <td>400</td>
+        <td>500</td>
+        <td>600</td>
+        <td>600</td>
+    </tr>
+    <tr>
+        <td>400</td>
+        <td>500</td>
+        <td>600</td>
+        <td>600</td>
+    </tr>
+    </tbody>
+</table>
+<!-- Javascript -->
+<script src="assets/vendor/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+<script src="assets/scripts/klorofil-common.js"></script>
+</body>
+</html>
