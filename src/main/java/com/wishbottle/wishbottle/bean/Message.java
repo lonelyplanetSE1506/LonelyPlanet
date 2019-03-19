@@ -13,7 +13,7 @@ public class Message {
     @ManyToOne
     private AccountInfo SenderAccountInfo;//发送消息者ID，外键——用户管理
     @ManyToOne
-    private AccountInfo ReceiveArAccountInfo;//接受消息者ID，外键——用户管理
+    private AccountInfo ReceiverAccountInfo;//接受消息者ID，外键——用户管理
     @Column(nullable = false,length =240)
     private String Content;//消息内容
 
@@ -22,7 +22,7 @@ public class Message {
     public Message(AccountInfo senderAccountInfo, AccountInfo receiveArAccountInfo, String content) {
         MsgTime = new Date();
         SenderAccountInfo = senderAccountInfo;
-        ReceiveArAccountInfo = receiveArAccountInfo;
+        ReceiverAccountInfo = receiveArAccountInfo;
         Content = content;
     }
 
@@ -54,11 +54,11 @@ public class Message {
     }
 
     public AccountInfo getReceiverAccountInfo() {
-        return ReceiveArAccountInfo;
+        return ReceiverAccountInfo;
     }
 
-    public void setReceiveArAccountInfo(AccountInfo receiveArAccountInfo) {
-        ReceiveArAccountInfo = receiveArAccountInfo;
+    public void setReceiverAccountInfo(AccountInfo receiveArAccountInfo) {
+        ReceiverAccountInfo = receiveArAccountInfo;
     }
 
     public String getContent() {

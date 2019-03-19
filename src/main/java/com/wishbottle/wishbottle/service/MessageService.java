@@ -20,6 +20,4 @@ public interface MessageService {
     //根据ID查询
     List<Message> search(Integer search);
 
-    //根据发送者和接收者ID查询
-    List<Message> queryBySenderAndReceiver(Integer SenderID, Integer ReceiverID);
 }

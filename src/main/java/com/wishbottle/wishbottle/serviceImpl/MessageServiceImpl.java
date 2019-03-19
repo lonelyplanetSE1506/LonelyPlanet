@@ -41,9 +41,4 @@ public class MessageServiceImpl implements MessageService {
     }
     //根据评论者的AccountID进行查找,我发表的评论
 
-    //根据发送者和接收者ID查询
-    @Override
-    public List<Message> queryBySenderAndReceiver(Integer SenderID, Integer ReceiverID) {
-        return messageRepository.queryBySenderAndReceiver(SenderID, ReceiverID);
-    }
 }
