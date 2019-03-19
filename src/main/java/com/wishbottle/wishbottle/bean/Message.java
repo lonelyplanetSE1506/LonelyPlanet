@@ -53,7 +53,7 @@ public class Message {
         SenderAccountInfo = senderAccountInfo;
     }
 
-    public AccountInfo getReceiveArAccountInfo() {
+    public AccountInfo getReceiverAccountInfo() {
         return ReceiveArAccountInfo;
     }
 
