@@ -53,4 +53,27 @@ public class MessageController {
             return "redirect:/tree";
         else return "loginPage";
     }
+
+    //查询
+    @PostMapping("/searchMessage")
+    public String searchWish(@RequestParam("searchBox") String searchBox, Model model) {
+        if (AccountInfoController.presentAccount.getEmail() != null) {
+            List<Message> messageList = null;
+            if (!searchBox.isEmpty())
+                this.searchString = searchBox;
+            Pattern pattern = Pattern.compile("[0-9]*");
+            //根据ID进行查询
+            if (pattern.matcher(searchString).matches()) {
+                Integer in = Integer.valueOf(searchString);
+                messageList = messageService.search(in);
+            } else {
+                messageList = messageService.search("%" + this.searchString + "%");
+            }
+            model.addAttribute("messages", messageList);
+            model.addAttribute("searchString", searchString);
+            model.addAttribute("presentAccount", AccountInfoController.presentAccount);
+            return "messagePage";
+        } else
+            return "loginPage";
+    }
 }

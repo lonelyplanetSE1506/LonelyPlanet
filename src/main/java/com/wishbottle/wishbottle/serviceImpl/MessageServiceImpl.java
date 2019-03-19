@@ -26,4 +26,24 @@ public class MessageServiceImpl implements MessageService {
     public void deleteMessage(Message message) {
         messageRepository.delete(message);
     }
+
+    //模糊查找
+    //根据评论者名字、评论的心愿内容或评论内容进行查找
+    @Override
+    public List<Message> search(String search) {
+        return  messageRepository.queryBySearch(search);
+    }
+
+    //根据ID查询
+    @Override
+    public List<Message> search(Integer search) {
+        return  messageRepository.queryBySearch(search);
+    }
+    //根据评论者的AccountID进行查找,我发表的评论
+
+    //根据发送者和接收者ID查询
+    @Override
+    public List<Message> queryBySenderAndReceiver(Integer SenderID, Integer ReceiverID) {
+        return messageRepository.queryBySenderAndReceiver(SenderID, ReceiverID);
+    }
 }

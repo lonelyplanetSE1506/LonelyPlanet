@@ -64,9 +64,6 @@ public class CommentsController {
             } else {
                 commentsList = commentsService.search("%" + this.searchString + "%");
             }
-            if (!searchBox.isEmpty())
-                this.searchString = searchBox;
-            commentsList = commentsService.search("%" + this.searchString + "%");
             model.addAttribute("comments", commentsList);
             model.addAttribute("searchString", searchString);
             model.addAttribute("presentAccount", AccountInfoController.presentAccount);
