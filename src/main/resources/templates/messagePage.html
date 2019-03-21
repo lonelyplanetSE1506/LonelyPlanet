@@ -28,6 +28,20 @@
     <script th:src="@{assets/jpages/js/jPages.js}"></script>
 
     <script>
+        $(document).ready(function(){
+            $("#deleteBtn").click(function(){
+                var str = "";
+                $("input[name='seletedMessages']").each(function(){
+                    if($(this).is(":checked"))
+                    {
+                        str = $(this).val()
+                        $.get("deleteMessage/"+str);
+                    }
+                });
+                window.location.reload()
+            });
+        });
+
         $(function(){
             $("div.holder").jPages({
                 containerID : "movies",
@@ -37,6 +51,7 @@
                 delay : 0
             });
         });
+
     </script>
 
     <style type="text/css">
@@ -117,17 +132,17 @@
                                     <table class="table table-bordered" style="table-layout: fixed;">
                                         <thead>
                                         <tr>
-                                            <th width="5%">#</th>
+                                            <th width="10%"><a id="deleteBtn" href="#">删除已选</a>#</th>
                                             <th width="10%">发送者</th>
                                             <th width="10%">接收者</th>
-                                            <th class="mwrap" width="55%"><div class="mwrap">消息内容</div></th>
+                                            <th class="mwrap" width="50%"><div class="mwrap">消息内容</div></th>
                                             <th width="10%">发送时间</th>
                                             <th width="10%">操作</th>
                                         </tr>
                                         </thead>
                                         <tbody id="movies">
                                         <tr th:each="Message : ${messages}">
-                                            <td th:text="${messages.indexOf(Message)+1}">101</td>
+                                            <td><input type="checkbox" name="seletedMessages" th:value="${Message.getMessageID()}" /> <span th:text="${messages.indexOf(Message)+1}"></span></td>
                                             <td th:text="${Message.getSenderAccountInfo().getNikeName()}">1001</td>
                                             <td th:text="${Message.getReceiverAccountInfo().getNikeName()}">1001</td>
                                             <td class="mwrap"><a href="#" data-toggle="modal" th:data-target="@{'#dialog'+${Message.getMessageID()}}"><div  class="mwrap" th:text="${Message.getContent()}" th:title="${Message.getContent()}">内容</div></a></td>

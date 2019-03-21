@@ -1,5 +1,6 @@
 package com.wishbottle.wishbottle.serviceImpl;
 
+import com.wishbottle.wishbottle.bean.AccountInfo;
 import com.wishbottle.wishbottle.bean.Message;
 import com.wishbottle.wishbottle.repository.MessageRepository;
 import com.wishbottle.wishbottle.service.MessageService;
@@ -28,7 +29,7 @@ public class MessageServiceImpl implements MessageService {
     }
 
     //模糊查找
-    //根据评论者名字、评论的心愿内容或评论内容进行查找
+    //根据接收者名字、消息内进行查找
     @Override
     public List<Message> search(String search) {
         return  messageRepository.queryBySearch(search);
@@ -39,6 +40,10 @@ public class MessageServiceImpl implements MessageService {
     public List<Message> search(Integer search) {
         return  messageRepository.queryBySearch(search);
     }
-    //根据评论者的AccountID进行查找,我发表的评论
 
+    //根据接收者ID查询
+    @Override
+    public List<Message> queryByReceiver(AccountInfo receiverAccountInfo) {
+        return  messageRepository.queryByReceiver(receiverAccountInfo);
+    }
 }

@@ -1,6 +1,7 @@
 //消息管理服务接口
 package com.wishbottle.wishbottle.service;
 
+import com.wishbottle.wishbottle.bean.AccountInfo;
 import com.wishbottle.wishbottle.bean.Message;
 
 import java.util.List;
@@ -15,9 +16,11 @@ public interface MessageService {
     void deleteMessage(Message message);
 
     //模糊查找
-    //根据评论者名字、评论的心愿内容或评论内容进行查找
+    //根据接收者名字、消息内进行查找
     List<Message> search(String search);
     //根据ID查询
     List<Message> search(Integer search);
 
+    //根据接收者ID查询
+    List<Message> queryByReceiver(AccountInfo receiverAccountInfo);
 }
