@@ -31,7 +31,7 @@
         $(document).ready(function(){
             $("#deleteBtn").click(function(){
                 var str = "";
-                $("input[name='seletedMessages']").each(function(){
+                $("input[name='selectedMessages']").each(function(){
                     if($(this).is(":checked"))
                     {
                         str = $(this).val()
@@ -142,7 +142,7 @@
                                         </thead>
                                         <tbody id="movies">
                                         <tr th:each="Message : ${messages}">
-                                            <td><input type="checkbox" name="seletedMessages" th:value="${Message.getMessageID()}" /> <span th:text="${messages.indexOf(Message)+1}"></span></td>
+                                            <td><input type="checkbox" name="selectedMessages" th:value="${Message.getMessageID()}" /> <span th:text="${messages.indexOf(Message)+1}"></span></td>
                                             <td th:text="${Message.getSenderAccountInfo().getNikeName()}">1001</td>
                                             <td th:text="${Message.getReceiverAccountInfo().getNikeName()}">1001</td>
                                             <td class="mwrap"><a href="#" data-toggle="modal" th:data-target="@{'#dialog'+${Message.getMessageID()}}"><div  class="mwrap" th:text="${Message.getContent()}" th:title="${Message.getContent()}">内容</div></a></td>

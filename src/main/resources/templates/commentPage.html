@@ -30,6 +30,20 @@
 	<script th:src="@{assets/jpages/js/jPages.js}"></script>
 
 	<script>
+		$(document).ready(function(){
+			$("#deleteBtn").click(function(){
+				var str = "";
+				$("input[name='selectedComments']").each(function(){
+					if($(this).is(":checked"))
+					{
+						str = $(this).val()
+						$.get("deleteComment/"+str);
+					}
+				});
+				window.location.reload()
+			});
+		});
+
         $(function(){
             $("div.holder").jPages({
                 containerID : "movies",
@@ -118,20 +132,20 @@
 								<table class="table table-bordered" style="table-layout: fixed;">
 									<thead>
 									<tr>
-										<th width="5%">#</th>
+										<th width="10%"><a id="deleteBtn" href="#">删除已选</a>#</th>
 										<th width="10%">评论者用户名</th>
-										<th width="10%">心愿标题</th>
+										<th width="10%" class="mwrap"><div class="mwrap">心愿标题</div></th>
 										<th width="20%" class="mwrap"><div class="mwrap">心愿内容</div></th>
-										<th width="35%" class="mwrap"><div class="mwrap">评论内容</div></th>
+										<th width="30%" class="mwrap"><div class="mwrap">评论内容</div></th>
 										<th width="10%">发布时间</th>
 										<th width="10%">操作</th>
 									</tr>
 									</thead>
 									<tbody id="movies">
 									<tr th:each="Comments : ${comments}">
-										<td th:text="${comments.indexOf(Comments)+1}">1</td><!--#-->
+										<td><input type="checkbox" name="selectedComments" th:value="${Comments.getCMID()}" /> <span th:text="${comments.indexOf(Comments)+1}">1</span></td><!--#-->
 										<td th:text="${Comments.getAccountInfo().getNikeName()}">223.20.30.27</td><!--	评论者用户名-->
-										<td th:text="${Comments.getWish().getTitle()}">223.20.30.27</td><!--心愿标题-->
+										<td class="mwrap"><div class="mwrap" th:text="${Comments.getWish().getTitle()}">223.20.30.27</div></td><!--心愿标题-->
 										<td class="mwrap"><div  class="mwrap" th:text="${Comments.getWish().getContent()}" th:title="${Comments.getWish().getContent()}"></div></td><!--心愿内容-->
 										<td class="mwrap"><a  href="#" data-toggle="modal" th:data-target="@{'#dialog'+${Comments.getCMID()}}"><div  class="mwrap" th:text="${Comments.getCMContent()}" th:title="${Comments.getCMContent()}">内容</div></a></td>
 										<td th:text="${Comments.getCMTime().toString().substring(0,16)}">2</td><!--发布时间-->

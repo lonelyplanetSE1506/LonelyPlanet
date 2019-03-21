@@ -28,6 +28,20 @@
 	<script th:src="@{assets/jpages/js/jPages.js}"></script>
 
 	<script>
+		$(document).ready(function(){
+			$("#deleteBtn").click(function(){
+				var str = "";
+				$("input[name='selectedWishs']").each(function(){
+					if($(this).is(":checked"))
+					{
+						str = $(this).val()
+						$.get("deleteWish/"+str);
+					}
+				});
+				window.location.reload()
+			});
+		});
+
         $(function(){
             $("div.holder").jPages({
                 containerID : "movies",
@@ -117,10 +131,10 @@
 									<table class="table table-bordered" style="table-layout: fixed;">
 										<thead>
 										<tr>
-											<th width="5%">#</th>
+											<th width="10%"><a id="deleteBtn" href="#">删除已选</a>#</th>
 											<th width="10%">心愿作者</th>
 											<th class="mwrap" width="15%"><div class="mwrap">标题</div></th>
-											<th class="mwrap" width="35%"><div class="mwrap">内容</div></th>
+											<th class="mwrap" width="30%"><div class="mwrap">内容</div></th>
 											<th width="5%">可见性</th>
 											<!--th width="5%">浏览数</th-->
 											<th width="5%">点赞数</th>
@@ -130,7 +144,7 @@
 										</thead>
 										<tbody id="movies">
 										<tr th:each="Wish : ${wishes}">
-											<td th:text="${wishes.indexOf(Wish)+1}">101</td>
+											<td><input type="checkbox" name="selectedWishs" th:value="${Wish.getWishID()}" /> <span th:text="${wishes.indexOf(Wish)+1}">101</span></td>
 											<td th:text="${Wish.getAccountInfo().getNikeName()}">1001</td>
 											<td class="mwrap"><div  class="mwrap" th:text="${Wish.getTitle()}" th:title="${Wish.getTitle()}">标题</div></td>
 											<td class="mwrap"><a href="#" data-toggle="modal" th:data-target="@{'#dialog'+${Wish.getWishID()}}"><div  class="mwrap" th:text="${Wish.getContent()}" th:title="${Wish.getContent()}">内容</div></a></td>
@@ -178,7 +192,7 @@
 															确定要删除这条心愿吗？
 														</div>
 														<div class="modal-footer">
-															<a class="btn btn-danger"
+															<a class="btn btn-danger" th:id="'delete' + ${Wish.getWishID()}"
 																	th:href="@{'deleteWish/'+${Wish.getWishID()}}">删除
 															</a>
 															<button type="button" class="btn btn-default"
