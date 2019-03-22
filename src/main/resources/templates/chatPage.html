@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.springframework.org/schema/data/jaxb">
+
+<head>
+    <title>心聊天页面测试</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <!-- VENDOR CSS -->
+    <link rel="stylesheet" th:href="@{assets/vendor/bootstrap/css/bootstrap.css}">
+    <link rel="stylesheet" th:href="@{assets/vendor/font-awesome/css/font-awesome.min.css}">
+    <link rel="stylesheet" th:href="@{assets/vendor/linearicons/style.css}">
+    <!-- MAIN CSS -->
+    <link rel="stylesheet" th:href="@{assets/css/main_cg.css}">
+    <!-- FOR DEMO PURPOSES ONLY. You should remove this in your project -->
+    <link rel="stylesheet" th:href="@{assets/css/demo.css}">
+    <!-- GOOGLE FONTS -->
+    <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700" rel="stylesheet">
+    <!-- ICONS -->
+    <link rel="apple-touch-icon" sizes="76x76" th:href="@{assets/img/apple-icon.png}">
+    <link rel="icon" type="image/png" sizes="96x96" th:href="@{assets/img/favicon.png}">
+
+    <script src="assets/vendor/jquery/jquery.min.js"></script>
+</head>
+<body>
+    <!--
+    <div th:each="myReceivedMessage: ${myReceivedMessages}">
+        <div class="col-lg-12 col-md-12 col-xs-12">
+            <div class="panel-group">
+                <div class="panel panel-default">
+                    <div class="panel-heading" style="background-color: white">
+                        <h3 th:text="${myReceivedMessage.getSenderAccountInfo().getNikeName()}">
+                            标题
+                        </h3>
+                        <p th:text="${myReceivedMessage.getContent()}">消息内容</p>
+                        <hr>
+                        <span>发送时间：</span><span th:text="${myReceivedMessage.getMsgTime().toString().substring(0,16)}"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>-->
+    <div th:each="item: ${myMap}">
+        <div class="col-lg-12 col-md-12 col-xs-12">
+            <div class="panel-group">
+                <div class="panel panel-default">
+                    <div class="panel-heading" style="background-color: white">
+                        <h3 th:text="${item.key}">
+                            标题
+                        </h3>
+
+                        <div th:each="myReceivedMessage: ${item.value}">
+                            <hr>
+                        <p th:text="${myReceivedMessage.getContent()}">消息内容</p>
+                        <span>发送时间：</span><span th:text="${myReceivedMessage.getMsgTime().toString().substring(0,16)}"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
