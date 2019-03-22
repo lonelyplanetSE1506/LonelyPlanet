@@ -38,34 +38,29 @@ public class ChatPageController {
     //返回我收到的消息
     private String returnChat(Model model,String returnStr){
 
-        Map<Integer, Object> map = new HashMap<Integer, Object>();
+        Map<AccountInfo, Object> map = new HashMap<AccountInfo, Object>();
 
         //我收到的消息
         List<Message> myMessageList = messageService.queryByReceiver(AccountInfoController.presentAccount);
 
-        List<Integer> accountList = new ArrayList<Integer>();
+        List<AccountInfo> accountList = new ArrayList<AccountInfo>();
         for (Message msg : myMessageList){
-            Integer senderAcountID = msg.getSenderAccountInfo().getAccountID();
-            if(accountList.contains(senderAcountID)){
-                System.out.println(msg.getSenderAccountInfo().getNikeName());
-                accountList.add(senderAcountID);
+            AccountInfo senderAcount = msg.getSenderAccountInfo();
+            if(!accountList.contains(senderAcount)){
+                //System.out.println(msg.getSenderAccountInfo().getNikeName());
+                accountList.add(senderAcount);
             }
 
         }
-        for (Integer id:accountList
-             ) {
-            System.out.println(id.toString());
-        }
-        System.out.println("hello");
 
-        for (Integer id: accountList) {
-            List<Message> newList = myMessageList.stream().filter(msg->msg.getSenderAccountInfo().getAccountID().equals(id)).collect(Collectors.toList());
-            map.put(id, newList);
+        for (AccountInfo account: accountList) {
+            List<Message> newList = myMessageList.stream().filter(msg->msg.getSenderAccountInfo().equals(account)).collect(Collectors.toList());
+            map.put(account, newList);
         }
 
 
-        map.put(1555555, myMessageList);
-        map.put(1444444,myMessageList);
+        //map.put(1555555, myMessageList);
+        //map.put(1444444,myMessageList);
 
         model.addAttribute("myMap",map);
         return returnStr;
