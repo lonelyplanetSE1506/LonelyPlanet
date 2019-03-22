@@ -47,7 +47,6 @@ public class ChatPageController {
         for (Message msg : myMessageList){
             AccountInfo senderAcount = msg.getSenderAccountInfo();
             if(!accountList.contains(senderAcount)){
-                //System.out.println(msg.getSenderAccountInfo().getNikeName());
                 accountList.add(senderAcount);
             }
 
@@ -57,10 +56,6 @@ public class ChatPageController {
             List<Message> newList = myMessageList.stream().filter(msg->msg.getSenderAccountInfo().equals(account)).collect(Collectors.toList());
             map.put(account, newList);
         }
-
-
-        //map.put(1555555, myMessageList);
-        //map.put(1444444,myMessageList);
 
         model.addAttribute("myMap",map);
         return returnStr;
