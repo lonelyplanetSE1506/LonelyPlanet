@@ -298,4 +298,13 @@ public class testRestController {
         System.out.println(awish.getCollectionNum());
         return true;
     }
+
+    //获取单个心愿
+    @GetMapping("/weChatGetOneWish/{wishID}")
+    public Map<String, Object> getOneWish(@PathVariable("wishID") Integer id) {
+        Map<String, Object> map = new HashMap<String, Object>();
+        Optional<Wish> oneWish = wishService.findByID(id);//根据wishID查询
+        map.put("oneWish", oneWish);
+        return map;
+    }
 }
