@@ -10,7 +10,7 @@ public class AccountInfo {
     @GeneratedValue//设定增长
     private Integer AccountID;//账号ID
 
-    @Column(unique = true,nullable=false,length = 32)//唯一值
+    @Column(unique = true,nullable=false,   length = 32)//唯一值
     private String NikeName;//昵称，唯一值，长度为32，不允许为空
     @Column(unique = true,nullable=false,length = 20)
     private String Email;//邮箱，唯一值，长度为20，不允许为空

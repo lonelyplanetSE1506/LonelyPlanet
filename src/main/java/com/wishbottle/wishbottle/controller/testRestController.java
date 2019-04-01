@@ -307,4 +307,14 @@ public class testRestController {
         map.put("oneWish", oneWish);
         return map;
     }
+
+    //获取我喜欢的心愿
+    @GetMapping("/myLikeWish/{accountID}")
+    public Map<String, Object> myLikeWish(@PathVariable("accountID") Integer id){
+        Map<String, Object> map = new HashMap<String, Object>();
+        //我的收藏
+        List<Collection> myCollection = collectionService.queryMyCollection(id);
+        map.put("myLikeWishList", myCollection);
+        return map;
+    }
 }
