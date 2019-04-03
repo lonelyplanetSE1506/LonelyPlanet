@@ -188,8 +188,7 @@ public class testRestController {
         return map;
     }
 
-    //是否已经点赞
-    //查询comment
+    //改变点赞并返回结果
     @GetMapping("/isGood/{id}")
     public boolean isGood(@PathVariable("id") Integer id) {
         List<Good> goodList = goodService.searchByAccountIDAndWishID(presentAccount.getAccountID(), id);
@@ -212,6 +211,7 @@ public class testRestController {
         }
     }
 
+
     //查询collection与collection对应的评论
     @GetMapping("/weChatgetCollection/{id}")
     public Map<String, Object> getCollection(@PathVariable("id") Integer id) {
@@ -233,7 +233,7 @@ public class testRestController {
         return map;
     }
 
-    //是否已经收藏
+    //改变收藏并返回结果
     @GetMapping("/isCollection/{id}")
     public boolean isCollection(@PathVariable("id") Integer id) {
         List<Collection> collectionList = collectionService.searchByAccountIDAndWishID(presentAccount.getAccountID(), id);
@@ -254,6 +254,13 @@ public class testRestController {
             wishService.updateWish(awish);
             return false;
         }
+    }
+
+    @GetMapping("/checkCollection/{id}")
+    public boolean checkCollection(@PathVariable("id") Integer id) {
+        List<Collection> collectionList = collectionService.searchByAccountIDAndWishID(presentAccount.getAccountID(), id);
+        Wish awish = wishService.findByID(id).get();
+        return !collectionList.isEmpty();
     }
 
     //添加评论
