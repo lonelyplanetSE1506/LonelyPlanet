@@ -315,13 +315,19 @@ public class testRestController {
         return map;
     }
 
-    //获取我喜欢的心愿
-    @GetMapping("/myLikeWish/{accountID}")
-    public Map<String, Object> myLikeWish(@PathVariable("accountID") Integer id){
+    //获取我评论的心愿
+    @GetMapping("/myCommentWish")
+    public Map<String, Object> myCommentWish(){
         Map<String, Object> map = new HashMap<String, Object>();
-        //我的收藏
-        List<Collection> myCollection = collectionService.queryMyCollection(id);
-        map.put("myLikeWishList", myCollection);
+
+        List<Wish> myCommentWish = new ArrayList<>();
+        List<Comments> myComments = commentsService.queryByAccountID(presentAccount.getAccountID());
+        for (Comments mc:myComments) {
+            myCommentWish.add(mc.getWish());
+            System.out.println(1);
+        }
+        List<Wish> newList = new ArrayList<Wish>(new HashSet<Wish>(myCommentWish));
+        map.put("myCommentWish", newList);
         return map;
     }
 }
