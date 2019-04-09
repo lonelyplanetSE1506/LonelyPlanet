@@ -31,6 +31,8 @@ public interface WishService {
     Wish updateWish(Wish awish);
     //获取点赞量前十的
     List<Wish> getTop10();
+    //获取评论前十的
+    List<Wish> getCommentTop10();
     //随机获取10个心愿
     List<Wish> getRan10();
 

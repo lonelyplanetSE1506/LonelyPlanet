@@ -319,9 +319,10 @@ public class testRestController {
     @GetMapping("/myCommentWish")
     public Map<String, Object> myCommentWish(){
         Map<String, Object> map = new HashMap<String, Object>();
-
         List<Wish> myCommentWish = new ArrayList<>();
+        //获取我的评论
         List<Comments> myComments = commentsService.queryByAccountID(presentAccount.getAccountID());
+        //获取我的评论对应的心愿
         for (Comments mc:myComments) {
             myCommentWish.add(mc.getWish());
             System.out.println(1);

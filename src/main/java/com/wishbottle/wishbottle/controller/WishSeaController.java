@@ -30,6 +30,7 @@ public class WishSeaController {
     String searchString="Search...";
     static List<Wish> top10=new ArrayList<>();//今日点赞量前十的心愿
     static List<Wish> ranWish=new ArrayList<>();//随机产生的十个心愿
+    static List<Wish> commentTop10=new ArrayList<>();//今日评论前十的心愿
     //心愿海
     @GetMapping("/wishSea")
     public String  wishSea(Model model) {
@@ -54,8 +55,10 @@ public class WishSeaController {
             aWishToComment.setCollectionList(myCollection);
             aWishToComment.setAccountInfoID(AccountInfoController.presentAccount.getAccountID());
             top10=wishService.getTop10();//今日点赞量前十的心愿
+            commentTop10=wishService.getCommentTop10();//今日评论前十的心愿
             ranWish=wishService.getRan10();//随机产生的十个心愿
             model.addAttribute("top10Wishes",top10);
+            model.addAttribute("commentTop10Wishes",commentTop10);
             model.addAttribute("randomWishes", ranWish);
             model.addAttribute("aWishToComment",aWishToComment);
             model.addAttribute("wishes", list);
@@ -88,6 +91,7 @@ public class WishSeaController {
             model.addAttribute("aWishToComment", aWishToComment);
             model.addAttribute("Wish", wish);
             model.addAttribute("top10Wishes", top10);
+            model.addAttribute("commentTop10Wishes", commentTop10);
             model.addAttribute("randomWishes", ranWish);
            /*model.addAttribute("id",id);
             return "redirect:/oneWishPage/"+id;*/
