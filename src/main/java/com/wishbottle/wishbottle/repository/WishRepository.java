@@ -29,8 +29,8 @@ public interface WishRepository extends JpaRepository<Wish, Integer> {
     @Query("select  a from Wish a order by GoodNum DESC")
     public List<Wish> queryOrderByGoodNum();
 
-    @Query("select  a from Wish a order by CommentNum DESC")
-    public List<Wish> queryOrderByCommentNum();
+    @Query("select  a from Wish a where a.Permision= ?1 order by CommentNum  DESC ")
+    public List<Wish> queryOrderByCommentNum(boolean permision);
 
 
 }

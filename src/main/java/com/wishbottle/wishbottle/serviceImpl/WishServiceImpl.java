@@ -78,20 +78,6 @@ public class WishServiceImpl implements WishService {
         return re;
     }
 
-    //获取评论前十的wish
-    @Override
-    public List<Wish> getCommentTop10(){
-        List<Wish> wishes=WishRepository.queryOrderByCommentNum();
-        int num=0;
-        SimpleDateFormat df=new SimpleDateFormat("yyyy-MM-dd");
-        String date=(df.format(new Date()));
-        List<Wish> re=new ArrayList<>();
-        for(Wish wish:wishes)
-            if(num<10)
-                if((df.format(wish.getRelTime())).equals(date))
-                {num++;re.add(wish);}
-        return re;
-    }
     //随机获取10个心愿
     @Override
     public List<Wish> getRan10(){
@@ -118,5 +104,18 @@ public class WishServiceImpl implements WishService {
         }
         return re;
     }
-
+    //根据可见性进行查找（可见性：仅自己可见、公开）
+    @Override
+    public List<Wish> getCommentTop10(boolean permisiom) {
+        List<Wish> wishes=WishRepository.queryOrderByCommentNum(permisiom);
+        int num=0;
+        SimpleDateFormat df=new SimpleDateFormat("yyyy-MM-dd");
+        String date=(df.format(new Date()));
+        List<Wish> re=new ArrayList<>();
+        for(Wish wish:wishes)
+            if(num<10)
+                if((df.format(wish.getRelTime())).equals(date))
+                {num++;re.add(wish);}
+        return re;
+    }
 }

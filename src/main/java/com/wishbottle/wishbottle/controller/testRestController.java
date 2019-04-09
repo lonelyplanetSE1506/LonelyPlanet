@@ -158,22 +158,16 @@ public class testRestController {
         List<Wish> wishList = wishService.getByPermision(true);//所有人可见
         Collections.reverse(wishList);// 倒序排列
         Integer accountID = presentAccount.getAccountID();
-        // isgood(accountID,wishID)
-        //isCollection(accountID,wishID)
-        // List<Boolean> hasGoodList=new ArrayList<>();
-        //List<Boolean> hasCollectionList=new ArrayList<>();
         for (Wish awish : wishList) {
             abigwishList.add(
                     new bigwish(goodService.hasGood(accountID, awish.getWishID()),
                             collectionService.hasCollection(accountID, awish.getWishID()), awish));
-            //   hasGoodList.add(goodService.hasGood(accountID,awish.getWishID()));
-            /// hasCollectionList.add(collectionService.hasCollection(accountID,awish.getWishID()));
         }
-        // map.put("hasGoodList",hasGoodList);
-        // map.put("hasCollectionList",hasCollectionList);
         map.put("publicWishList", abigwishList);
         return map;
     }
+
+
 
     //查询comment
     @GetMapping("/weChatgetComment/{id}")
@@ -337,5 +331,22 @@ public class testRestController {
     public void addName(@PathVariable("str") String nameStr) {
         presentAccount.setNikeName(nameStr);
         System.out.println(presentAccount.getNikeName());
+    }
+
+    //获取Top10心愿
+    @GetMapping("/Top10Wish")
+    public Map<String, Object> Top10Wish() {
+        Map<String, Object> map = new HashMap<String, Object>();
+        List<bigwish> abigwishList = new ArrayList<>();
+        List<Wish> wishList = wishService.getCommentTop10(true);//所有人可见
+        //Collections.reverse(wishList);// 倒序排列
+        Integer accountID = presentAccount.getAccountID();
+        for (Wish awish : wishList) {
+            abigwishList.add(
+                    new bigwish(goodService.hasGood(accountID, awish.getWishID()),
+                            collectionService.hasCollection(accountID, awish.getWishID()), awish));
+        }
+        map.put("publicWishList", abigwishList);
+        return map;
     }
 }
