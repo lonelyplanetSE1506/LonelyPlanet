@@ -330,4 +330,11 @@ public class testRestController {
         map.put("myCommentWish", newList);
         return map;
     }
+
+    //修改昵称  待完成 数据库增加？
+    @GetMapping("/weChataddName/{str}")
+    public void addName(@PathVariable("str") String nameStr) {
+        presentAccount.setNikeName(nameStr);
+        System.out.println(presentAccount.getNikeName());
+    }
 }
