@@ -13,6 +13,8 @@ public class testRestController {
     @Autowired
     AccountInfoService accountInfoService;
     @Autowired
+    WeChatAccountService aWeChatAccountService;
+    @Autowired
     LogService logService;
     @Autowired
     WishService wishService;
@@ -336,5 +338,27 @@ public class testRestController {
     public void addName(@PathVariable("str") String nameStr) {
         presentAccount.setNikeName(nameStr);
         System.out.println(presentAccount.getNikeName());
+    }
+
+    //新微信登录验证
+    @PostMapping("/newWeChatLogin")
+    public String  newWechatLogin(@RequestBody String openid) {
+        /*
+        WeChatAccount aWeChatAccount = new WeChatAccount(openid);
+        aWeChatAccountService.addWeChatAccount(aWeChatAccount);
+        return true;*/
+
+        Optional<WeChatAccount> aWeChatAccount = aWeChatAccountService.queryByOpenID(openid);
+        System.out.println(aWeChatAccount.isPresent());
+        if (aWeChatAccount.isPresent())
+        {
+            return "old";
+        }
+        else
+        {
+            WeChatAccount nWeChatAccount = new WeChatAccount(openid);
+            aWeChatAccountService.addWeChatAccount(nWeChatAccount);
+            return "new";
+        }
     }
 }

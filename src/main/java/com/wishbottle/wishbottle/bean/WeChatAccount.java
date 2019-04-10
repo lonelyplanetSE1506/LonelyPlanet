@@ -20,8 +20,32 @@ public class WeChatAccount {
 
     private Date RegestTime;//注册时间
 
+    public WeChatAccount() {
+    }
+
+    public Integer getAccountID() {
+        return AccountID;
+    }
+
+    public String getOpenID() {
+        return OpenID;
+    }
+
+    public String getNikeName() {
+        return NikeName;
+    }
+
+    public String getSelfIntro() {
+        return SelfIntro;
+    }
+
+    public Date getRegestTime() {
+        return RegestTime;
+    }
+
     public WeChatAccount(String openID) {
         OpenID = openID;
+        NikeName="Default";
         RegestTime=new Date();
     }
 }
