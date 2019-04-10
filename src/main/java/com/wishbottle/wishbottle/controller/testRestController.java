@@ -343,11 +343,6 @@ public class testRestController {
     //新微信登录验证
     @PostMapping("/newWeChatLogin")
     public String  newWechatLogin(@RequestBody String openid) {
-        /*
-        WeChatAccount aWeChatAccount = new WeChatAccount(openid);
-        aWeChatAccountService.addWeChatAccount(aWeChatAccount);
-        return true;*/
-
         Optional<WeChatAccount> aWeChatAccount = aWeChatAccountService.queryByOpenID(openid);
         System.out.println(aWeChatAccount.isPresent());
         if (aWeChatAccount.isPresent())
@@ -360,5 +355,17 @@ public class testRestController {
             aWeChatAccountService.addWeChatAccount(nWeChatAccount);
             return "new";
         }
+    }
+
+    //获取微信用户账号信息
+    @PostMapping("/getWeChatAccountInfo")
+    public Map<String, Object> getWeChatAccountInfo(@RequestBody String openid) {
+        Map<String, Object> map = new HashMap<String, Object>();
+        Optional<WeChatAccount> aWeChatAccount = aWeChatAccountService.queryByOpenID(openid);
+        if (aWeChatAccount.isPresent())
+        {
+            map.put("userInfo", aWeChatAccount.get());
+        }
+        return map;
     }
 }

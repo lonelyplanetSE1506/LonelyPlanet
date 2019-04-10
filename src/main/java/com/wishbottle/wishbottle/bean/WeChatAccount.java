@@ -46,6 +46,7 @@ public class WeChatAccount {
     public WeChatAccount(String openID) {
         OpenID = openID;
         NikeName="Default";
+        SelfIntro = "空白";
         RegestTime=new Date();
     }
 }
