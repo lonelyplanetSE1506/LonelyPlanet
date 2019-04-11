@@ -337,42 +337,27 @@ public class testRestController {
     @PostMapping("/weChatEditName")
     public String weChatEditName(@RequestBody Map<String, String> map) {
         System.out.println(map.get("name"));
-        WeChatAccount aWeChatAccount = aWeChatAccountService.queryByOpenID(map.get("openid")).get();
-        aWeChatAccount.setNikeName(map.get("name"));
-        aWeChatAccountService.updateWeChatAccount(aWeChatAccount);
+        AccountInfo aWeChatAccount = accountInfoService.queryByOpenID(map.get("openid")).get();
+        aWeChatAccount.setWxNikeName(map.get("name"));
+        accountInfoService.updateAccountInfo(aWeChatAccount);
         return  "success";
     }
 
-    //新微信登录验证
-    @PostMapping("/newWeChatLogin")
-    public String  newWechatLogin(@RequestBody String openid) {
-        Optional<WeChatAccount> aWeChatAccount = aWeChatAccountService.queryByOpenID(openid);
-        System.out.println(aWeChatAccount.isPresent());
-        if (aWeChatAccount.isPresent())
-        {
-            return "old";
-        }
-        else
-        {
-            WeChatAccount nWeChatAccount = new WeChatAccount(openid);
-            aWeChatAccountService.addWeChatAccount(nWeChatAccount);
-            return "new";
-        }
-    }
 
     //获取微信用户账号信息
     @PostMapping("/getWeChatAccountInfo")
     public Map<String, Object> getWeChatAccountInfo(@RequestBody String openid) {
         Map<String, Object> map = new HashMap<String, Object>();
-        Optional<WeChatAccount> aWeChatAccount = aWeChatAccountService.queryByOpenID(openid);
+        System.out.println(openid);
+        Optional<AccountInfo> aWeChatAccount = accountInfoService.queryByOpenID(openid);
         if (aWeChatAccount.isPresent())
         {
             map.put("userInfo", aWeChatAccount.get());
         }
         else
         {
-            WeChatAccount nWeChatAccount = new WeChatAccount(openid);
-            aWeChatAccountService.addWeChatAccount(nWeChatAccount);
+            AccountInfo nWeChatAccount = new AccountInfo(openid);
+            accountInfoService.addAccountInfo(nWeChatAccount);
             map.put("userInfo", nWeChatAccount);
         }
         return map;

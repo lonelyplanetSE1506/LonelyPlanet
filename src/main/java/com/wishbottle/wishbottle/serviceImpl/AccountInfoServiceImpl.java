@@ -72,4 +72,13 @@ public class AccountInfoServiceImpl implements AccountInfoService {
     public List<AccountInfo> search(String search) {
         return  accountInfoRepository.queryBySearch(search);
     }
+
+    /**
+     * 根据openID查询
+     * 精确查询
+     */
+    @Override
+    public Optional<AccountInfo> queryByOpenID(String openid){
+        return accountInfoRepository.queryByOpenID(openid);
+    }
 }

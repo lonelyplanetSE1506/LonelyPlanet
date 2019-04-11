@@ -10,17 +10,24 @@ public class AccountInfo {
     @GeneratedValue//设定增长
     private Integer AccountID;//账号ID
 
-    @Column(unique = true,nullable=false,   length = 32)//唯一值
-    private String NikeName;//昵称，唯一值，长度为32，不允许为空
-    @Column(unique = true,nullable=false,length = 20)
-    private String Email;//邮箱，唯一值，长度为20，不允许为空
-    @Column(length = 20,nullable=false)
-    private String Password;//密码，不允许为空，长度为20
+    @Column(unique = true)//唯一值
+    private String OpenID;//用户OpenID
+
+    @Column(unique = true,length = 32)//唯一值
+    private String NikeName;//昵称，，长度为32，
+
+    @Column(length = 32)
+    private String WxNikeName;//微信昵称，可以改，长度为32，
+
+    @Column(unique = true,length = 20)
+    private String Email;//邮箱，唯一值，长度为20，
+    @Column(length = 20)
+    private String Password;//密码，，长度为20
 
     @Column(length = 100)
     private String SelfIntro;//自我介绍，长度为100
 
-    @Column(length = 32,nullable=false)
+    @Column(length = 32)
     private String Avatar;//头像照片路径\src\main\resources\static\assets\img
 
     private Date RegestTime;//注册时间
@@ -95,9 +102,24 @@ public class AccountInfo {
         Level = level;
     }
 
-    public AccountInfo() {
+    public String getWxNikeName() {
+        return WxNikeName;
     }
 
+    public void setWxNikeName(String wxNikeName) {
+        WxNikeName = wxNikeName;
+    }
+
+    public String getOpenID() {
+        return OpenID;
+    }
+
+    public void setOpenID(String openID) {
+        OpenID = openID;
+    }
+
+    public AccountInfo() {
+    }
     public AccountInfo(String nikeName, String email, String password) {
         NikeName = nikeName;
         Email = email;
@@ -106,5 +128,13 @@ public class AccountInfo {
         RegestTime=new Date();
         SelfIntro = "这个人很懒 什么都没有留下";
         Birthday =new Date();
+    }
+
+    //微信小程序ID
+    public AccountInfo(String openID) {
+        OpenID = openID;
+        WxNikeName="Default";
+        SelfIntro = "空白";
+        RegestTime=new Date();
     }
 }

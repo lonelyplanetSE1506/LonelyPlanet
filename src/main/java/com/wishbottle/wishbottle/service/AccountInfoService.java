@@ -21,4 +21,7 @@ public interface AccountInfoService {
    //根据email或name查询账号
    //模糊查询
    List<AccountInfo> search(String search);
+
+    //通过openid查询
+    Optional<AccountInfo> queryByOpenID(String openid);
 }

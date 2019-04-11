@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface AccountInfoRepository extends JpaRepository<AccountInfo,Integer> {
     /**
@@ -25,4 +26,8 @@ public interface AccountInfoRepository extends JpaRepository<AccountInfo,Integer
     @Query("select a from AccountInfo a where a.NikeName like ?1 " +
             "or a.Email like ?1")
     public List<AccountInfo> queryBySearch(String search);
+
+    //根据openid查询微信账号
+    @Query("select a from AccountInfo a where a.OpenID=?1")
+    public Optional<AccountInfo> queryByOpenID(String openid);
 }
