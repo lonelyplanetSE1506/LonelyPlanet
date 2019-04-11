@@ -333,11 +333,14 @@ public class testRestController {
         return map;
     }
 
-    //修改昵称  待完成 数据库增加？
-    @GetMapping("/weChataddName/{str}")
-    public void addName(@PathVariable("str") String nameStr) {
-        presentAccount.setNikeName(nameStr);
-        System.out.println(presentAccount.getNikeName());
+    //修改昵称
+    @PostMapping("/weChatEditName")
+    public String weChatEditName(@RequestBody Map<String, String> map) {
+        System.out.println(map.get("name"));
+        WeChatAccount aWeChatAccount = aWeChatAccountService.queryByOpenID(map.get("openid")).get();
+        aWeChatAccount.setNikeName(map.get("name"));
+        aWeChatAccountService.updateWeChatAccount(aWeChatAccount);
+        return  "success";
     }
 
     //新微信登录验证
@@ -365,6 +368,12 @@ public class testRestController {
         if (aWeChatAccount.isPresent())
         {
             map.put("userInfo", aWeChatAccount.get());
+        }
+        else
+        {
+            WeChatAccount nWeChatAccount = new WeChatAccount(openid);
+            aWeChatAccountService.addWeChatAccount(nWeChatAccount);
+            map.put("userInfo", nWeChatAccount);
         }
         return map;
     }

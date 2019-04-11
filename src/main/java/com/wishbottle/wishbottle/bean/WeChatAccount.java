@@ -43,6 +43,14 @@ public class WeChatAccount {
         return RegestTime;
     }
 
+    public void setNikeName(String nikeName) {
+        NikeName = nikeName;
+    }
+
+    public void setSelfIntro(String selfIntro) {
+        SelfIntro = selfIntro;
+    }
+
     public WeChatAccount(String openID) {
         OpenID = openID;
         NikeName="Default";
