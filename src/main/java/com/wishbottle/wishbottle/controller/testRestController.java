@@ -108,7 +108,7 @@ public class testRestController {
     }
 
     //获取个人心愿
-    @GetMapping("/reWish")
+    @PostMapping("/reWish")
     public Map<String, Object> myWish(@RequestBody String openID) {
         AccountInfo aWeChatAccount = accountInfoService.queryByOpenID(openID).get();
 
