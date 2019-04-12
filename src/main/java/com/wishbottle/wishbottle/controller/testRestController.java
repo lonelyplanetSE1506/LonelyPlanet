@@ -126,7 +126,7 @@ public class testRestController {
         Gson gson = new Gson();
         Map<String, Object> map = new HashMap<String, Object>();
         map = gson.fromJson(wishStr, map.getClass());
-        
+
         if (map.containsKey("permision")){
             //如果存在，可以直接put新的键值对。新的键值会自动覆盖之前的。
             if (map.get("permision").equals("true"))
@@ -287,27 +287,21 @@ public class testRestController {
     }
 
     //添加评论
-    @GetMapping("/weChatAddComment/{str}")
-    public Map<String, Object> addComment(@PathVariable("str") String str) {
+    @PostMapping("/weChatAddComment")
+    public String addComment(@RequestBody Map<String, String> body) {
+        Integer wishID = Integer.parseInt(body.get("wishid"));
+        String openID = body.get("openid");
+        String cmcontent = body.get("cmcontent");
 
-        String[] pp=str.split(":");
-        String wiship=pp[0];
-        System.out.println(wiship);
-        String cmcontent=str.substring(wiship.length()+1);
-        System.out.println(cmcontent);
-        Integer id=Integer.parseInt(wiship);
-        Wish awish=wishService.findByID(id).get();
-        System.out.println(awish.getWishID());
-        Comments comments=new Comments(awish,presentAccount,cmcontent);
+        Wish awish = wishService.findByID(wishID).get();
+        System.out.println(awish);
+
+        AccountInfo aWeChatAccount = accountInfoService.queryByOpenID(body.get("openid").toString()).get();
+        Comments comment = new Comments(awish,aWeChatAccount,cmcontent);
         awish.setCommentNum(awish.getCommentNum()+1);
         wishService.updateWish(awish);
-        commentsService.addComment(comments);
-        Map<String, Object> map = new HashMap<String, Object>();
-        List<Comments> commentsList = commentsService.search(id);//根据wishID查询
-        System.out.println(commentsList.size());
-        //accountInfoList.add(presentAccount);
-        map.put("commentsList", commentsList);
-        return map;
+        commentsService.addComment(comment);
+        return "success";
     }
     //删除collection by collectionid
     @GetMapping("/weChatDeleteCollection/{id}")
