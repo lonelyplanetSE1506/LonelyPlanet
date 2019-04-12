@@ -109,9 +109,11 @@ public class testRestController {
 
     //获取个人心愿
     @GetMapping("/reWish")
-    public Map<String, Object> myWish() {
+    public Map<String, Object> myWish(@RequestBody String openID) {
+        AccountInfo aWeChatAccount = accountInfoService.queryByOpenID(openID).get();
+
         Map<String, Object> map = new HashMap<String, Object>();
-        List<Wish> wishList = wishService.getByAccountID(presentAccount.getAccountID());
+        List<Wish> wishList = wishService.getByAccountID(aWeChatAccount.getAccountID());
         Collections.reverse(wishList);// 倒序排列
         //accountInfoList.add(presentAccount);
         map.put("mywishList", wishList);
@@ -163,10 +165,12 @@ public class testRestController {
     }
 
     //我的收藏
-    @GetMapping("/reCollection")
-    public Map<String, Object> myCollection() {
+    @PostMapping("/reCollection")
+    public Map<String, Object> myCollection(@RequestBody String openID) {
+        AccountInfo aWeChatAccount = accountInfoService.queryByOpenID(openID).get();
+
         Map<String, Object> map = new HashMap<String, Object>();
-        List<Collection> collectionList = collectionService.queryMyCollection(presentAccount.getAccountID());
+        List<Collection> collectionList = collectionService.queryMyCollection(aWeChatAccount.getAccountID());
         Collections.reverse(collectionList);// 倒序排列
         //accountInfoList.add(presentAccount);
         map.put("myCollectionList", collectionList);
@@ -334,16 +338,17 @@ public class testRestController {
     }
 
     //获取我评论的心愿
-    @GetMapping("/myCommentWish")
-    public Map<String, Object> myCommentWish(){
+    @PostMapping("/myCommentWish")
+    public Map<String, Object> myCommentWish(@RequestBody String openID) {
+        AccountInfo aWeChatAccount = accountInfoService.queryByOpenID(openID).get();
+
         Map<String, Object> map = new HashMap<String, Object>();
         List<Wish> myCommentWish = new ArrayList<>();
         //获取我的评论
-        List<Comments> myComments = commentsService.queryByAccountID(presentAccount.getAccountID());
+        List<Comments> myComments = commentsService.queryByAccountID(aWeChatAccount.getAccountID());
         //获取我的评论对应的心愿
         for (Comments mc:myComments) {
             myCommentWish.add(mc.getWish());
-            System.out.println(1);
         }
         List<Wish> newList = new ArrayList<Wish>(new HashSet<Wish>(myCommentWish));
         map.put("myCommentWish", newList);
