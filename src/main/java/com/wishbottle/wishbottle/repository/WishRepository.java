@@ -27,12 +27,10 @@ public interface WishRepository extends JpaRepository<Wish, Integer> {
     public List<Wish> queryByAccountID(Integer accountID);
 
     @Query("select  a from Wish a order by GoodNum DESC")
-             public List<Wish> queryOrderByGoodNum();
-            //<str_to_date(a.regest_time)>,'%Y-%m-%d %H:%i:%s'))" )
-            //">str_to_date('2014/09/09 10:00:00','%Y/%m/%d %H:%i:%s')\n"  +
-          //  "            \"and str_to_date(a.regest_time,'%Y-%m-%d %H:%i:%s')<str_to_date('2018/10/10 10:00:00','%Y/%m/%d %H:%i:%s'))\")
-            /*
-            "str_to_date(a.regest_time,'%Y-%m-%d %H:%i:%s')>str_to_date('2014/09/09 10:00:00','%Y/%m/%d %H:%i:%s')\n" +
-            "and str_to_date(a.regest_time,'%Y-%m-%d %H:%i:%s')<str_to_date('2018/10/10 10:00:00','%Y/%m/%d %H:%i:%s'))")*/
+    public List<Wish> queryOrderByGoodNum();
+
+    @Query("select  a from Wish a where a.Permision= ?1 order by CommentNum  DESC ")
+    public List<Wish> queryOrderByCommentNum(boolean permision);
+
 
 }
