@@ -251,15 +251,21 @@ public class testRestController {
     }
 
     //改变收藏并返回结果
-    @GetMapping("/isCollection/{id}")
-    public boolean isCollection(@PathVariable("id") Integer id) {
-        List<Collection> collectionList = collectionService.searchByAccountIDAndWishID(presentAccount.getAccountID(), id);
-        System.out.println(collectionService.hasCollection(presentAccount.getAccountID(), id));//有则true
-        Wish awish = wishService.findByID(id).get();
+    @PostMapping("/isCollection")
+    public boolean isCollection(@RequestBody Map<String, String> body) {
+        Integer wishID = Integer.parseInt(body.get("wishid"));
+        String openID = body.get("openid");
+        AccountInfo aWeChatAccount = accountInfoService.queryByOpenID(openID).get();
+
+        System.out.println(body);
+
+        List<Collection> collectionList = collectionService.searchByAccountIDAndWishID(aWeChatAccount.getAccountID(), wishID);
+        System.out.println(collectionService.hasCollection(aWeChatAccount.getAccountID(), wishID));//有则true
+        Wish awish = wishService.findByID(wishID).get();
         if (collectionList.isEmpty()) {
             //无，添加成功
             System.out.println("true");
-            collectionService.add(new Collection(presentAccount, awish));
+            collectionService.add(new Collection(aWeChatAccount, awish));
             awish.setCollectionNum(awish.getCollectionNum() + 1);
             wishService.updateWish(awish);
             return true;
@@ -273,11 +279,12 @@ public class testRestController {
         }
     }
 
-    @GetMapping("/checkCollection/{id}")
-    public boolean checkCollection(@PathVariable("id") Integer id) {
-        List<Collection> collectionList = collectionService.searchByAccountIDAndWishID(presentAccount.getAccountID(), id);
-        Wish awish = wishService.findByID(id).get();
-        return !collectionList.isEmpty();
+    @PostMapping("/checkCollection")
+    public boolean checkCollection(@RequestBody Map<String, String> body) {
+        Integer wishID = Integer.parseInt(body.get("wishid"));
+        String openID = body.get("openid");
+        AccountInfo aWeChatAccount = accountInfoService.queryByOpenID(openID).get();
+        return collectionService.hasCollection(aWeChatAccount.getAccountID(), wishID);
     }
 
     //添加评论
