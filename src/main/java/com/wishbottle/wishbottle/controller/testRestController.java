@@ -1,8 +1,10 @@
 package com.wishbottle.wishbottle.controller;
 
+import com.google.gson.Gson;
 import com.wishbottle.wishbottle.bean.*;
 import com.wishbottle.wishbottle.bean.Collection;
 import com.wishbottle.wishbottle.service.*;
+import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -118,15 +120,34 @@ public class testRestController {
 
     //添加心愿
     @PostMapping("/weChatAddWish")
-    public Map<String, Object> addWish(@RequestBody Wish wish) {
+    public Map<String, Object> addWish(@RequestBody Map<String, Object> body) {
+        String wishStr = body.get("wish").toString();
+
+        Gson gson = new Gson();
+        Map<String, Object> map = new HashMap<String, Object>();
+        map = gson.fromJson(wishStr, map.getClass());
+        
+        if (map.containsKey("permision")){
+            //如果存在，可以直接put新的键值对。新的键值会自动覆盖之前的。
+            if (map.get("permision").equals("true"))
+                map.put("permision", true);
+            else
+                map.put("permision", false);
+        }
+
         Map<String, Object> modelMap = new HashMap<String, Object>();
-        System.out.println("addWish");
-        // System.out.println(wish.getTitle());
-        //  System.out.println(wish.getContent());
-        //  System.out.println(wish.getPermision());
-        wish.setAccountInfo(presentAccount);
-        wish.setRelTime(new Date());
-        modelMap.put("success", wishService.addWish(wish));
+        System.out.println(body.get("openid").toString());
+        System.out.println(wishStr);
+        //Wish wish = (Wish)body.get("wish");
+        Optional<AccountInfo> aWeChatAccount = accountInfoService.queryByOpenID(body.get("openid").toString());
+        if (aWeChatAccount.isPresent())
+        {
+            System.out.println(aWeChatAccount.get().getWxNikeName());
+            Wish wish = new Wish(aWeChatAccount.get(),(String) map.get("title"),(String) map.get("content"),(boolean) map.get("permision"));
+
+            System.out.println(wish.getTitle());
+            modelMap.put("success", wishService.addWish(wish));
+        }
         return modelMap;
     }
 
