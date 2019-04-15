@@ -392,13 +392,15 @@ public class testRestController {
         List<bigwish> abigwishList = new ArrayList<>();
         List<Wish> wishList = wishService.getCommentTop10(true);//所有人可见
         //Collections.reverse(wishList);// 倒序排列
+        /*
         Integer accountID = presentAccount.getAccountID();
+
         for (Wish awish : wishList) {
             abigwishList.add(
                     new bigwish(goodService.hasGood(accountID, awish.getWishID()),
                             collectionService.hasCollection(accountID, awish.getWishID()), awish));
-        }
-        map.put("publicWishList", abigwishList);
+        }*/
+        map.put("top10WishList", wishList);
         return map;
     }
 }

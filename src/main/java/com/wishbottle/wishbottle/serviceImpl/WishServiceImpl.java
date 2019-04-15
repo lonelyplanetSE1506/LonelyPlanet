@@ -109,13 +109,15 @@ public class WishServiceImpl implements WishService {
     public List<Wish> getCommentTop10(boolean permisiom) {
         List<Wish> wishes=WishRepository.queryOrderByCommentNum(permisiom);
         int num=0;
-        SimpleDateFormat df=new SimpleDateFormat("yyyy-MM-dd");
-        String date=(df.format(new Date()));
+        /*SimpleDateFormat df=new SimpleDateFormat("yyyy-MM-dd");
+        String date=(df.format(new Date()));*/
         List<Wish> re=new ArrayList<>();
         for(Wish wish:wishes)
             if(num<10)
-                if((df.format(wish.getRelTime())).equals(date))
-                {num++;re.add(wish);}
+                /*if((df.format(wish.getRelTime())).equals(date))*/
+                {
+                    num++;re.add(wish);
+                }
         return re;
     }
 }
