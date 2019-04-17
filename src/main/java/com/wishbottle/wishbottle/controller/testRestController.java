@@ -177,22 +177,7 @@ public class testRestController {
         return map;
     }
 
-    //获取大众心愿
-    @GetMapping("/PublicWish")
-    public Map<String, Object> publicWish() {
-        Map<String, Object> map = new HashMap<String, Object>();
-        List<bigwish> abigwishList = new ArrayList<>();
-        List<Wish> wishList = wishService.getByPermision(true);//所有人可见
-        Collections.reverse(wishList);// 倒序排列
-        Integer accountID = presentAccount.getAccountID();
-        for (Wish awish : wishList) {
-            abigwishList.add(
-                    new bigwish(goodService.hasGood(accountID, awish.getWishID()),
-                            collectionService.hasCollection(accountID, awish.getWishID()), awish));
-        }
-        map.put("publicWishList", abigwishList);
-        return map;
-    }
+
 
 
 
@@ -386,21 +371,38 @@ public class testRestController {
     }
 
     //获取Top10心愿
-    @GetMapping("/Top10Wish")
-    public Map<String, Object> Top10Wish() {
+    @PostMapping("/Top10Wish")
+    public Map<String, Object> Top10Wish(@RequestBody Integer id) {
         Map<String, Object> map = new HashMap<String, Object>();
         List<bigwish> abigwishList = new ArrayList<>();
         List<Wish> wishList = wishService.getCommentTop10(true);//所有人可见
         //Collections.reverse(wishList);// 倒序排列
-        /*
-        Integer accountID = presentAccount.getAccountID();
 
+        Integer accountID = id;
+        System.out.println(accountID);
         for (Wish awish : wishList) {
             abigwishList.add(
                     new bigwish(goodService.hasGood(accountID, awish.getWishID()),
                             collectionService.hasCollection(accountID, awish.getWishID()), awish));
-        }*/
-        map.put("top10WishList", wishList);
+        }
+        map.put("top10WishList", abigwishList);
+        return map;
+    }
+
+    //获取大众心愿
+    @PostMapping("/PublicWish")
+    public Map<String, Object> publicWish(@RequestBody Integer id) {
+        Map<String, Object> map = new HashMap<String, Object>();
+        List<bigwish> abigwishList = new ArrayList<>();
+        List<Wish> wishList = wishService.getByPermision(true);//所有人可见
+        Collections.reverse(wishList);// 倒序排列
+        Integer accountID = id;
+        for (Wish awish : wishList) {
+            abigwishList.add(
+                    new bigwish(goodService.hasGood(accountID, awish.getWishID()),
+                            collectionService.hasCollection(accountID, awish.getWishID()), awish));
+        }
+        map.put("publicWishList", abigwishList);
         return map;
     }
 }
