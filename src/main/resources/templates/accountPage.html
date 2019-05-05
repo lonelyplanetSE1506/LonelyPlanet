@@ -92,7 +92,6 @@
 						<li><a th:href="@{/wishPage}" class=""><i class="lnr lnr-heart"></i> <span>心愿管理</span></a></li>
 						<li><a th:href="@{/commentPage}" class=""><i class="lnr lnr-bubble"></i> <span>评论管理</span></a></li>
 						<li><a th:href="@{/collectPage}" class=""><i class="lnr lnr-star"></i> <span>收藏管理</span></a></li>
-						<li><a th:href="@{/messagePage}" class=""><i class="lnr lnr-envelope"></i> <span>消息管理</span></a></li>
 					</ul>
 				</nav>
 			</div>
@@ -167,7 +166,6 @@
 												<th width="25%" class="mwrap"><div class="mwrap">自我介绍</div></th>
 												<th width="5%">账号权限</th>
 												<th width="15%">头像路径</th>
-												<th width="10%">出生日期</th>
 												<th width="10%">注册时间</th>
 												<!--th>操作</th-->
 											</tr>
@@ -175,7 +173,7 @@
 										<tbody id="movies">
 											<tr th:each="AccountInfo : ${account}">
 												<td th:text="${account.indexOf(AccountInfo)+1}">103</td><!--#-->
-												<td th:text="${AccountInfo.getNikeName()}">Steve</td><!--用户名-->
+												<td th:text="${AccountInfo.getNikeName()}? ${AccountInfo.getNikeName()} : '小程序用户：'+${AccountInfo.getWxNikeName()}"></td>
 												<td th:text="${AccountInfo.getEmail()}">wukr@enet.com</td><!--邮箱-->
 												<td class="mwrap"><div class="mwrap" th:text="${AccountInfo.getSelfIntro()}">自我介绍</div></td><!--自我介绍-->
 												<td ><script type="text/javascript">
@@ -190,7 +188,6 @@
 												</script>
 												</td>
 												<td ><a th:text="${AccountInfo.getAvatar()}" ></a></td><!--账号头像-->
-												<td th:text="${AccountInfo.getBirthday().toString().substring(0,10)}">2018.6.20</td><!--出生日期-->
 												<td th:text="${AccountInfo.getRegestTime().toString().substring(0,16)}"></td>
 												<!--td><a th:href="@{'deleteAccount/'+${AccountInfo.getAccountID()}}"><span class="lnr lnr-trash"></span>删除</a></td-->
 											</tr>

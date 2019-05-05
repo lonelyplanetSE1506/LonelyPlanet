@@ -93,7 +93,6 @@
 					<li><a th:href="@{/wishPage}" class=""><i class="lnr lnr-heart"></i> <span>心愿管理</span></a></li>
 					<li><a th:href="@{/commentPage}" class=""><i class="lnr lnr-bubble"></i> <span>评论管理</span></a></li>
 					<li><a th:href="@{/collectPage}" class="active"><i class="lnr lnr-star"></i> <span>收藏管理</span></a></li>
-					<li><a th:href="@{/messagePage}" class=""><i class="lnr lnr-envelope"></i> <span>消息管理</span></a></li>
 				</ul>
 			</nav>
 		</div>
@@ -126,7 +125,8 @@
 									<tbody id="movies">
 									<tr th:each="Collection : ${collections}">
 										<td th:text="${collections.indexOf(Collection)+1}">1</td><!--#-->
-										<td th:text="${Collection.getAccountInfo().getNikeName()}">Steve</td><!--用户名-->
+										<td th:text="${Collection.getAccountInfo().getNikeName()}? ${Collection.getAccountInfo().getNikeName()} : '小程序用户：'+${Collection.getAccountInfo().getWxNikeName()}"></td>
+
 										<td class="mwrap"><div  class="mwrap" th:text="${Collection.getWish().getTitle()}" th:title="${Collection.getWish().getTitle()}"></div></td><!--心愿标题-->
 										<td class="mwrap"><a href="#" data-toggle="modal" th:data-target="@{'#dialog'+${Collection.getWish().getWishID()}}"><div  class="mwrap" th:text="${Collection.getWish().getContent()}" th:title="${Collection.getWish().getContent()}">内容</div></a></td><!--心愿内容-->
 										<td th:text="${Collection.getCLTime().toString().substring(0,16)}">2018.6.24  10:32</td><!--收藏时间-->
