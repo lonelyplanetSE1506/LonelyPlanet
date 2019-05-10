@@ -53,7 +53,7 @@
 		<!-- NAVBAR -->
 		<nav class="navbar navbar-default navbar-fixed-top">
 			<div class="brand">
-				<a th:href="@{/index}"><img th:src="@{/assets/img/logo-dark.png}" alt="Klorofil Logo" class="img-responsive logo"></a>
+				<a th:href="@{/index}"><img th:src="@{/assets/img/logo-dark.png}" alt="Klorofil Logo" class="img-responsive logo" width="250"></a>
 			</div>
 			<div class="container-fluid">
 				<div class="navbar-btn">
@@ -163,9 +163,8 @@
 												<th width="5%">#</th>
 												<th width="10%">用户名</th>
 												<th width="10%">邮箱</th>
-												<th width="25%" class="mwrap"><div class="mwrap">自我介绍</div></th>
+												<th width="40%" class="mwrap"><div class="mwrap">自我介绍</div></th>
 												<th width="5%">账号权限</th>
-												<th width="15%">头像路径</th>
 												<th width="10%">注册时间</th>
 												<!--th>操作</th-->
 											</tr>
@@ -187,7 +186,6 @@
                                                         document.write("普通");
 												</script>
 												</td>
-												<td ><a th:text="${AccountInfo.getAvatar()}" ></a></td><!--账号头像-->
 												<td th:text="${AccountInfo.getRegestTime().toString().substring(0,16)}"></td>
 												<!--td><a th:href="@{'deleteAccount/'+${AccountInfo.getAccountID()}}"><span class="lnr lnr-trash"></span>删除</a></td-->
 											</tr>
